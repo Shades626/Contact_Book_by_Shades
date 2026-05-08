@@ -1,5 +1,6 @@
 let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
 let editIndex = -1;
+console.log("Contact Book App Initialized Successfully");
 
 displayContacts();
 
@@ -18,9 +19,13 @@ function addContact() {
     contacts.push({ name, phone, email });
   } else {
     // Update existing contact
+    console.log("Updating contact:", contacts[editIndex]);
     contacts[editIndex] = { name, phone, email };
     editIndex = -1;
   }
+
+  const contact = { name, phone, email };
+  console.log("Adding contact:", contact);
 
   localStorage.setItem("contacts", JSON.stringify(contacts));
 
@@ -40,7 +45,7 @@ function displayContacts() {
       <button onclick="editContact(${index})">Edit</button>
       <button onclick="deleteContact(${index})">Delete</button>
     `;
-
+    console.log("Contact added successfully");
     list.appendChild(li);
   });
 }
@@ -51,6 +56,7 @@ function deleteContact(index) {
     localStorage.setItem("contacts", JSON.stringify(contacts));
     displayContacts();
   }
+  console.log("Deleting contact:", contacts[index]);
 }
 
 function editContact(index) {
@@ -59,6 +65,7 @@ function editContact(index) {
   document.getElementById("name").value = contact.name;
   document.getElementById("phone").value = contact.phone;
   document.getElementById("email").value = contact.email;
+  console.log("Editing contact:", contacts[index]);
 
   editIndex = index;
 }
@@ -67,6 +74,7 @@ function searchContact() {
   const search = document.getElementById("search").value.toLowerCase();
   const list = document.getElementById("contactList");
   list.innerHTML = "";
+  console.log("Searching for:", search);
 
   contacts.forEach((contact, index) => {
     if (contact.name.toLowerCase().includes(search)) {
